@@ -1,0 +1,178 @@
+1. Download and extract the project
+
+Download the latest project ZIP
+
+Extract it somewhere simple, for example:
+
+C:\Projects\NestWise-Pakistan
+2. Make sure these are installed
+
+You need:
+
+Node.js — preferably Node 20+
+Python — preferably Python 3.11+
+Git — mainly for GitHub/CI/CD
+Docker Desktop — optional, only if you want to run it through Docker
+
+Check them in PowerShell:
+
+node --version
+npm --version
+python --version
+git --version
+3. Run the Flask backend
+
+Open the extracted project folder.
+
+Then open PowerShell/Terminal inside the project and go to the backend folder. Depending on where you extracted it:
+
+cd C:\Projects\NestWise-Pakistan
+
+If the project has a backend folder:
+
+cd backend
+
+Create a Python virtual environment:
+
+python -m venv venv
+
+Activate it:
+
+.\venv\Scripts\Activate.ps1
+
+If PowerShell gives an execution-policy error, run:
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+Then activate again:
+
+.\venv\Scripts\Activate.ps1
+
+Install backend packages:
+
+pip install -r requirements.txt
+
+Then start Flask:
+
+python app.py
+
+You should see something similar to:
+
+Running on http://127.0.0.1:5000
+
+Keep this terminal open.
+
+4. Run the React.js frontend
+
+Open a second PowerShell window.
+
+Go to the project frontend folder:
+
+cd C:\Projects\NestWise-Pakistan\frontend
+
+Install React dependencies:
+
+npm install
+
+Then start React:
+
+npm run dev
+
+You should get something similar to:
+
+Local: http://localhost:5173/
+
+Open:
+
+http://localhost:5173
+
+in Chrome.
+
+Your structure should basically work like:
+
+Browser
+   ↓
+React.js
+localhost:5173
+   ↓ REST API
+Python Flask
+localhost:5000
+   ↓
+SQLite Database
+5. Demo login
+
+Try:
+
+Email: demo@nestwise.pk
+Password: Demo123!
+
+You should then be able to test the recommendation agent, house buying, rental properties, hostels, hotels, favorites, property websites, inquiries, and nearby-area information.
+
+6. Run with Docker instead
+
+Because I also added Docker support, you can use Docker Desktop instead of manually starting React and Flask.
+
+Open Docker Desktop first.
+
+Then from the main project directory run:
+
+docker compose up --build
+
+The first build can install all the required dependencies.
+
+To stop it:
+
+docker compose down
+7. How the CI/CD pipeline runs
+
+You do not manually run the GitHub Actions pipeline in the normal workflow.
+
+Upload/push the project to GitHub:
+
+git init
+git add .
+git commit -m "Initial NestWise full stack project"
+git branch -M main
+git remote add origin YOUR_GITHUB_REPOSITORY_URL
+git push -u origin main
+
+Then go to:
+
+GitHub Repository
+→ Actions
+
+You should see the NestWise pipeline.
+
+On a push to main, GitHub Actions will handle the pipeline stages such as:
+
+Push Code
+   ↓
+Backend CI
+   ↓
+Frontend CI
+   ↓
+React Production Build
+   ↓
+Docker Validation
+   ↓
+Docker Build
+   ↓
+CD / Deployment Artifact
+If you only want to run the project normally
+
+You only need two terminals:
+
+Terminal 1
+
+cd backend
+.\venv\Scripts\Activate.ps1
+python app.py
+
+Terminal 2
+
+cd frontend
+npm run dev
+
+Then visit:
+
+http://localhost:5173
